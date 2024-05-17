@@ -77,7 +77,6 @@ def normalise_queries(data, qs_len):
 
     return data
 
-# statistiche sul dataset
 def dataset_statistics(data, labels, qlen):
     n_ists, n_feat = data.shape
     n_query = len(qlen)
@@ -92,7 +91,6 @@ def dataset_statistics(data, labels, qlen):
     for data in sort:
         print(data)
 
-# salva dataset in numpy matrix file
 def save_in_numpy(data, labels, query_lens, filename):
     X = data
     y = labels.reshape(-1, 1)
@@ -105,7 +103,6 @@ def save_in_numpy(data, labels, query_lens, filename):
     data = np.hstack((X,y,q))
     np.save(filename, data)
 
-# salva dataset in numpy matrix file
 def save_svmlight_to_numpy(data, labels, query_lens, filename, zero_cols=False, f_index=None):
     data = data.toarray()
     y = labels.reshape(-1, 1)
