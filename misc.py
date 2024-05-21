@@ -2,6 +2,8 @@ import torch
 import random
 import numpy as np
 
+def stable_argsort(score):
+    return len(score) - 1 - np.argsort(score[::-1], kind='stable')[::-1]
 
 def set_seed(seed):
     random.seed(seed)
