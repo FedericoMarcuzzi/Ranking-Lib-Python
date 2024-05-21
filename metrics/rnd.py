@@ -18,7 +18,7 @@ class rND(Metric):
     def _max_rND_query_norm(self, y_true, y_score, set_name=None, id=None):
         return self.max_rND_query(y_true, self.step, self.cutoff)
 
-    def rD_query(self, y_true, step, cutoff, skip_sort=True, y_score=None):
+    def rD_query(self, y_true, step, cutoff, skip_sort=False, y_score=None):
         if not skip_sort:
             y_true = y_true[stable_argsort(y_score)]
 
@@ -35,7 +35,6 @@ class rND(Metric):
 
         r_cum = np.cumsum(y_true)
         cum_slice_list = np.cumsum(slice_list)
-
         rD_query = np.sum(np.abs(r_cum[cum_slice_list - 1] / cum_slice_list - n_prot / n_itms) * (1 / np.log2(cum_slice_list + 1)))
         return 0. if rD_query < 1e-7 else rD_query
 
@@ -60,5 +59,4 @@ class rND(Metric):
         if max_ <= 0.: return 0.
 
         rnk = stable_argsort(y_score)
-        print(y_true[rnk])
-        return self.rD_query(y_true[rnk], step, cutoff) / max_
+        return self.rD_query(y_true[rnk], step, cutoff, skip_sort=True) / max_
